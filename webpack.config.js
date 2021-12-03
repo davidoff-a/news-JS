@@ -5,41 +5,41 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const baseConfig = {
-    entry: path.resolve(__dirname, './src/index.ts'),
-    mode: 'development',
-    module: {
-        rules: [
-            {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.tsx?$/i,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
-        ],
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-    },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, './dist'),
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/index.html'),
-            filename: 'index.html',
-        }),
-        new CleanWebpackPlugin(),
-      new ESLintPlugin({extentions: ['ts', 'js']}),
+  entry: path.resolve(__dirname, './src/index.ts'),
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.tsx?$/i,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, './dist'),
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+    }),
+    new CleanWebpackPlugin(),
+    new ESLintPlugin(),
+  ],
 };
 
 module.exports = ({ mode }) => {
-    const isProductionMode = mode === 'prod';
-    const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
+  const isProductionMode = mode === 'prod';
+  const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
 
-    return merge(baseConfig, envConfig);
+  return merge(baseConfig, envConfig);
 };
