@@ -2,7 +2,7 @@ const AppLoader = require('./appLoader');
 
 class AppController extends AppLoader {
   getSources(callback:any) {
-    super. (
+    super.getResp(
       {
         endpoint: 'sources',
       },
@@ -10,7 +10,7 @@ class AppController extends AppLoader {
     );
   }
 
-  getNews(e, callback:any) {
+  getNews(e:any, callback:any) {
     let target = e.target;
     const newsContainer = e.currentTarget;
 
