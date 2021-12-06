@@ -1,6 +1,6 @@
 import './sources.css';
 
-class Sources {
+module.exports = class Sources {
   draw(data: any) {
     const fragment = document.createDocumentFragment();
     const $sourceItemTemp = document.querySelector('#sourceItemTemp');
@@ -28,4 +28,4 @@ class Sources {
   }
 }
 
-export default Sources;
+// export default Sources;
