@@ -1,6 +1,6 @@
 import './news.css';
 
-module.exports = class News {
+class News {
   draw(data: any[]) {
     const news = data.length >= 10 ? data.filter((_item, idx: number) => idx < 10) : data;
 
@@ -51,4 +51,4 @@ module.exports = class News {
   }
 }
 
-// export default News;
+export default News;

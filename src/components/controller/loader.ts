@@ -1,36 +1,12 @@
-interface Isettings {
-  [key: string]: string;
-}
-
-interface IRequest {
-  endpoint: string
-}
-
-interface IResponse {
-  status: string;
-  totalResult: string;
-  articles: IArticle[];
-}
-
-interface IArticle {
-  source: { id: string; name: string };
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
-}
-module.exports = class Loader {
+class Loader {
   baseLink: string;
-  options: Isettings;
-  constructor(baseLink: string, options: Isettings) {
+  options: any;
+  constructor(baseLink: string, options: any) {
     this.baseLink = baseLink;
     this.options = options;
   }
 
-  getResp(endpoint: IRequest, callback: (argument?: string) => void, options?: Isettings) {
+  getResp(endpoint: string, options: any, callback: any) {
     callback ? this.load('GET', endpoint, callback, options) : console.error('No callback for GET response');
   }
 
@@ -44,9 +20,9 @@ module.exports = class Loader {
     return res;
   }
 
-  makeUrl(options: Isettings = {}, endpoint: IRequest,): string {
+  makeUrl(options: any, endpoint: string): string {
     const urlOptions = { ...this.options, ...options };
-    let url = `${this.baseLink}${endpoint.endpoint}?`;
+    let url = `${this.baseLink}${endpoint}?`;
 
     Object.keys(urlOptions).forEach((key) => {
       url += `${key}=${urlOptions[key]}&`;
@@ -55,13 +31,13 @@ module.exports = class Loader {
     return url.slice(0, -1);
   }
 
-  load(method: string, endpoint: IRequest, callback: (argument?: string) => void, options: Isettings = {}) {
+  load(method: string, endpoint: string, callback: any, options = {}) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json())
       .then((data) => callback(data))
       .catch((err) => console.error(err));
   }
-};
+}
 
-// export default Loader;
+export default Loader;

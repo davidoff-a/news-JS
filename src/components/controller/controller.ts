@@ -1,7 +1,7 @@
 const AppLoader = require('./appLoader');
 
-module.exports = class AppController extends AppLoader {
-  getSources(callback:(attribute?: string)=> void) {
+class AppController extends AppLoader {
+  getSources(callback:any) {
     super.getResp(
       {
         endpoint: 'sources',
@@ -10,7 +10,7 @@ module.exports = class AppController extends AppLoader {
     );
   }
 
-  getNews(e:any, callback:(attribute?: string)=> void) {
+  getNews(e:any, callback:any) {
     let target = e.target;
     const newsContainer = e.currentTarget;
 
@@ -36,4 +36,4 @@ module.exports = class AppController extends AppLoader {
   }
 }
 
-
+export default AppController;

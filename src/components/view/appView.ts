@@ -1,7 +1,7 @@
 const News = require('./news/news');
 const Sources = require('./sources/sources');
 
-module.exports=class AppView {
+export class AppView {
   news: any;
   sources: any;
   constructor() {
@@ -20,4 +20,4 @@ module.exports=class AppView {
   }
 }
 
-// export default AppView;
+export default AppView;
