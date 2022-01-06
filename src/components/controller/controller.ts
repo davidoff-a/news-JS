@@ -1,7 +1,7 @@
-const AppLoader = require('./appLoader');
+import AppLoader from './appLoader';
 
-module.exports = class AppController extends AppLoader {
-  getSources(callback:(attribute?: string)=> void) {
+class AppController extends AppLoader {
+  getSources(callback) {
     super.getResp(
       {
         endpoint: 'sources',
@@ -10,14 +10,18 @@ module.exports = class AppController extends AppLoader {
     );
   }
 
-  getNews(e:any, callback:(attribute?: string)=> void) {
+  getNews(e: MouseEvent, callback: (data?: Response) => void) {
     let target = e.target;
     const newsContainer = e.currentTarget;
 
     while (target !== newsContainer) {
-      if (target.classList.contains('source__item')) {
+      if (target instanceof HTMLElement && target.classList.contains('source__item')) {
         const sourceId = target.getAttribute('data-source-id');
-        if (newsContainer.getAttribute('data-source') !== sourceId) {
+        if (
+          newsContainer instanceof HTMLElement &&
+          newsContainer.getAttribute('data-source') !== sourceId &&
+          sourceId
+        ) {
           newsContainer.setAttribute('data-source', sourceId);
           super.getResp(
             {
@@ -31,9 +35,12 @@ module.exports = class AppController extends AppLoader {
         }
         return;
       }
-      target = target.parentNode;
+      if (target instanceof HTMLElement) {
+        target = target.parentNode;
+      }
+      
     }
   }
 }
 
-
+export default AppController;

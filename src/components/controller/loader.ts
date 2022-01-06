@@ -1,40 +1,26 @@
-interface Isettings {
-  [key: string]: string;
-}
-
-interface IRequest {
-  endpoint: string
-}
-
-interface IResponse {
-  status: string;
-  totalResult: string;
-  articles: IArticle[];
-}
-
-interface IArticle {
-  source: { id: string; name: string };
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
-}
-module.exports = class Loader {
-  baseLink: string;
-  options: Isettings;
-  constructor(baseLink: string, options: Isettings) {
-    this.baseLink = baseLink;
-    this.options = options;
+class Loader {
+  constructor(public baseLink: string, public options: { [keys: string]: string }) {
   }
 
-  getResp(endpoint: IRequest, callback: (argument?: string) => void, options?: Isettings) {
-    callback ? this.load('GET', endpoint, callback, options) : console.error('No callback for GET response');
+  getResp(
+    { endpoint, options = {} },
+    callback: () => void = () => {
+      console.error('No callback for GET response');
+    }
+  ) {
+    this.load({ method: 'GET', endpoint, callback, options });
   }
 
-  errorHandler(res: any) {
+  load({ method, endpoint, callback, options = {} }: { method: string; endpoint: string; callback: (data?: Response) => void; options?: {}; }) {
+    fetch(this.makeUrl(options, endpoint), { method })
+      .then(this.errorHandler)
+      .then((res) => res.json())
+      .then((data) => callback(data))
+      .catch((err) => console.error(err));
+    
+  }
+
+  errorHandler(res: Response): Response {
     if (!res.ok) {
       if (res.status === 401 || res.status === 404)
         console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
@@ -44,9 +30,9 @@ module.exports = class Loader {
     return res;
   }
 
-  makeUrl(options: Isettings = {}, endpoint: IRequest,): string {
+  makeUrl(options: { [keys: string]: string }, endpoint: string) {
     const urlOptions = { ...this.options, ...options };
-    let url = `${this.baseLink}${endpoint.endpoint}?`;
+    let url = `${this.baseLink}${endpoint}?`;
 
     Object.keys(urlOptions).forEach((key) => {
       url += `${key}=${urlOptions[key]}&`;
@@ -54,14 +40,6 @@ module.exports = class Loader {
 
     return url.slice(0, -1);
   }
+}
 
-  load(method: string, endpoint: IRequest, callback: (argument?: string) => void, options: Isettings = {}) {
-    fetch(this.makeUrl(options, endpoint), { method })
-      .then(this.errorHandler)
-      .then((res) => res.json())
-      .then((data) => callback(data))
-      .catch((err) => console.error(err));
-  }
-};
-
-// export default Loader;
+export default Loader;
