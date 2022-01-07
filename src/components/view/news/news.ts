@@ -1,7 +1,19 @@
 import './news.css';
-
+interface INews {
+  source: {
+    id: string | null;
+    name: string;
+  };
+  author: string | null;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt:string;
+  content: string;
+}
 class News {
-    draw(data) {
+    draw(data:INews[]): void {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
