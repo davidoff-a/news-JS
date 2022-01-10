@@ -12,8 +12,9 @@ export interface INewsResponse {
 }
 export class AppView {
   news: News;
+
   sources: Sources;
-  // drawNews: (data: Response | undefined) => void;
+
   constructor() {
     this.news = new News();
     this.sources = new Sources();

@@ -1,9 +1,11 @@
 import AppController from '../controller/controller';
-import { AppView, INewsResponse, ISourcesResponse,  } from '../view/appView';
+import { AppView, INewsResponse, ISourcesResponse } from '../view/appView';
 
 class App {
   controller: AppController;
+
   view: AppView;
+
   constructor() {
     this.controller = new AppController();
     this.view = new AppView();

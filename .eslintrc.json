@@ -19,8 +19,9 @@
         "node": true
     },
     "rules": {
+        "comma-dangle": "off",
+        "@typescript-eslint/comma-dangle": ["error", "only-multiline"],
         "no-debugger": "off",
-        // "no-console": 0,
         "class-methods-use-this": "off",
         "no-plusplus": "off",
         "no-console": "warn",
