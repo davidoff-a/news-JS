@@ -1,5 +1,5 @@
 import './news.css';
-interface INews {
+export interface INews {
   source: {
     id: string | null;
     name: string;

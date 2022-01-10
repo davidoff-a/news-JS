@@ -1,5 +1,5 @@
 import './sources.css';
-interface ISource {
+export interface ISource {
   id: string;
   name: string;
   url: string;
@@ -28,7 +28,7 @@ class Sources {
     classNames.forEach((className) => {
       element.classList.add(className);
     });
-    console.log(`атрибуты => ${Object.entries(attribs)}`);
+    // console.log(`атрибуты => ${Object.entries(attribs)}`);
     Object.entries(attribs).forEach((item) => {
       element.setAttribute(item[0], item[1]);
     });
