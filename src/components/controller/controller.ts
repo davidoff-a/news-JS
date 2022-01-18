@@ -7,10 +7,11 @@ class AppController extends AppLoader {
       {
         endpoint: 'sources',
       },
-      callback);
+      callback
+    );
   }
 
-  getNews({ e, callback }: { e: MouseEvent; callback: (data?: INewsResponse) => void; }): void {
+  getNews({ e, callback }: { e: MouseEvent; callback: (data?: INewsResponse) => void }): void {
     let target = e.target;
     const newsContainer = e.currentTarget;
 

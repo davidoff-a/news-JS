@@ -20,17 +20,15 @@ class News {
       newsBlock.innerHTML = '';
     }
     news.forEach((item, idx) => {
-      const newsItem = idx % 2 ? this.createElement('div', ['news__item', 'alt']) : this.createElement('div', ['news__item']);
-
+      const newsItem =
+        idx % 2 ? this.createElement('div', ['news__item', 'alt']) : this.createElement('div', ['news__item']);
       const newsMetaDate = this.createElement('li', ['news__meta-date']);
       newsMetaDate.textContent = item.publishedAt.slice(0, 10).split('-').reverse().join('-');
       const newsMetaAuthor = this.createElement('li', ['news__meta-author']);
       newsMetaAuthor.textContent = item.author || item.source.name;
       const newsMetaDetails = this.createElement('ul', ['news__meta-details']);
       const newsMetaPhoto = this.createElement('div', ['news__meta-photo']);
-      newsMetaPhoto.style.backgroundImage = `url(${
-        item.urlToImage || 'img/news_placeholder.jpg'
-      })`;
+      newsMetaPhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
       const newsMeta = this.createElement('div', ['news__meta']);
       const newsMore = this.createElement('a', [], { href: item.url });
       newsMore.innerText = 'Read More';
@@ -51,16 +49,12 @@ class News {
       newsDescription.insertAdjacentElement('beforeend', newsSource);
       newsDescription.insertAdjacentElement('beforeend', newsContent);
       newsDescription.insertAdjacentElement('beforeend', newsReadMore);
-        newsItem.insertAdjacentElement('beforeend', newsMeta);
-        newsItem.insertAdjacentElement('beforeend', newsDescription);
-      
-      
+      newsItem.insertAdjacentElement('beforeend', newsMeta);
+      newsItem.insertAdjacentElement('beforeend', newsDescription);
       if (newsBlock) {
         newsBlock.appendChild(newsItem);
       }
-
     });
-    
   }
 
   createElement(selector: string, classNames?: string[], attribs?: { [keys: string]: string }): HTMLElement {
