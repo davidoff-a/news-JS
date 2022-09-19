@@ -1,8 +1,10 @@
+// import { ISource } from '../view/sources/sources';
+
 class Loader {
   constructor(public baseLink: string, public options: { [keys: string]: string }) {}
 
   getResp(
-    { endpoint, options = {} }: { endpoint: string; options?: { [key: string]: string } },
+    { endpoint, options }: { endpoint: string; options?: { [key: string]: string } },
     callback: () => void = () => {
       throw new Error('No callback for GET response');
     }
@@ -19,14 +21,14 @@ class Loader {
     method: string;
     endpoint: string;
     callback: (data?: Response) => void;
-    options?: { [keys: string]: string };
+    options?: { [key: string]: string };
   }): void {
     fetch(this.makeUrl({ options, endpoint }), { method })
       .then(this.errorHandler)
       .then((res: Response) => res.json())
       .then((data: Response) => callback(data))
-      .catch((err: string) => {
-        throw new Error(err);
+      .catch((err: Error) => {
+        throw new Error(`${err}`);
       });
   }
 
